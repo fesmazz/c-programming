@@ -8,7 +8,7 @@
  */
 int isInRange(int coord, int offset, int size) {
   
-  if (coord < (offset+size) && coord > offset) {
+  if (coord < (offset+size) && coord >= offset) {
       return 1;
   }
   // if coord is in range, return 1
@@ -23,21 +23,16 @@ int isInRange(int coord, int offset, int size) {
  */
 // if coord is equal to offest or offset + size return 1, else return 0 
 int isAtBorder(int coord, int offset, int size) {
-  if (coord == offset){
+  if (coord == offset || coord == (offset+size)){
     return 1;
   }
-  else {
-    if (coord == (offset+size)){
-      return 1;
-    }
     else {
       return 0;
     }
-  }
 }
 
 int maxoff (int n1, int n2){
-  if (n1 >= n2) {
+  if (n1 > n2) {
     return n1;
   }
   else {
