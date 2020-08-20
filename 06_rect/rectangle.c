@@ -17,14 +17,71 @@ int max (int a, int b) {
 
 //Declare your rectangle structure here!
 
+typedef struct {
+  int x;
+  int y;
+  int width;
+  int height;
+}
+  rectangle;
+
 
 rectangle canonicalize(rectangle r) {
-  //WRITE THIS FUNCTION
+  if (r.width  < 0) {
+    r.x += r.width;
+    r.width *= -1;
+  }
+    
+  if (r.height  < 0) {
+    r.y += r.height;
+    r.height *= -1;
+  }
+  
   return r;
 }
 rectangle intersection(rectangle r1, rectangle r2) {
-  //WRITE THIS FUNCTION
-  return r1;
+  r1 = canonicalize(r1);
+  r2 = canonicalize(r2);
+  int min_x = min(r1.x, r2.x);
+  int max_x = max(r1.x, r2.x);
+  int min_y = min(r1.y, r2.y);
+  int max_y = max(r1.y, r2.y);
+  int w_offset;
+  int h_offset;
+  rectangle ri;
+  if (min_x == r1.x) {
+    w_offset = r1.width;
+  }
+  else {
+    w_offset = r2.width;
+  }
+  if (min_y == r1.y){
+    h_offset = r1.height;
+  }
+  else {
+    h_offset = r2.height;
+  }
+ if (((r1.x == r2.x) && (r1.y == r2.y)) && ((r1.width == r2.width) && (r1.height == r2.height))) {
+   ri.x = r1.x;
+   ri.y = r1.y;
+   ri.width = r1.width;
+   ri.height = r2.height;
+ }
+ else {
+  if (((min_x + w_offset) >= max_x) && ((min_y + h_offset) >= max_y)) {
+    ri.x = max_x;
+    ri.y = max_y;
+    ri.width = min((r1.x + r1.width), (r2.x+r2.width)) - max_x;
+    ri.height = min((r1.y + r1.height), (r2.y + r2.height)) - max_y;
+  }
+  else {
+    ri.x = 0;
+    ri.y = 0;
+    ri.width = 0;
+    ri.height = 0;
+    }  
+  }  
+  return ri;
 }
 
 //You should not need to modify any code below this line
