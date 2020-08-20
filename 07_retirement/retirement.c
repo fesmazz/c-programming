@@ -1,20 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct retire_info {
+struct retire_t {
   int months;
   double contribution;
   double rate_of_return;
 };
 
-typedef struct retire_info retire;
+typedef struct retire_t retire_info;
 
 typedef struct {
   int age;
   double savings;
 } savings;
 
-savings acc_balance (int start, double initial, retire info){
+savings acc_balance (int start, double initial, retire_info info){
   savings r;
   int i; 
   double balance;
@@ -32,8 +32,8 @@ savings acc_balance (int start, double initial, retire info){
 
 void retirement(int startAge,     //in months
 		double initial,   //initial savings in dollars
-		retire working,   //info about working
-		retire retired)   //info about being retirent
+		retire_info working,   //info about working
+		retire_info retired)   //info about being retirent
 {
   savings r;
   r = acc_balance(startAge, initial, working);
@@ -41,7 +41,7 @@ void retirement(int startAge,     //in months
 }
 
 int main(void) {
-  retire working, retired;
+  retire_info working, retired;
   working.months = 489;
   working.contribution = 1000;
   working.rate_of_return = 1 + 0.045 / 12;
