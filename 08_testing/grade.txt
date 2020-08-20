@@ -1,0 +1,67 @@
+Grading at Thu Aug 20 21:46:25 UTC 2020
+#################################################
+test input.1:
+I expected to find a file called 'input.1' but it did not exist
+(or was not a regular file)
+Here are the files that I can find:
+imput.1
+imput.2
+imput.2~
+imput.3
+imput.4
+isPrime-broken1
+isPrime-broken2
+isPrime-broken3
+isPrime-broken4
+isPrime-correct
+README
+#################################################
+test input.2:
+I expected to find a file called 'input.2' but it did not exist
+(or was not a regular file)
+Here are the files that I can find:
+imput.1
+imput.2
+imput.2~
+imput.3
+imput.4
+isPrime-broken1
+isPrime-broken2
+isPrime-broken3
+isPrime-broken4
+isPrime-correct
+README
+#################################################
+test input.3:
+I expected to find a file called 'input.3' but it did not exist
+(or was not a regular file)
+Here are the files that I can find:
+imput.1
+imput.2
+imput.2~
+imput.3
+imput.4
+isPrime-broken1
+isPrime-broken2
+isPrime-broken3
+isPrime-broken4
+isPrime-correct
+README
+#################################################
+test input.4:
+I expected to find a file called 'input.4' but it did not exist
+(or was not a regular file)
+Here are the files that I can find:
+imput.1
+imput.2
+imput.2~
+imput.3
+imput.4
+isPrime-broken1
+isPrime-broken2
+isPrime-broken3
+isPrime-broken4
+isPrime-correct
+README
+
+Overall Grade: F
