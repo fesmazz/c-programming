@@ -66,9 +66,33 @@ void print_card(card_t c) {
 
 card_t card_from_letters(char value_let, char suit_let) {
   card_t temp;
+  unsigned x;
+  suit_t y;
   if (((value_let >= 50 && value_let <= 57) || value_let == 48 || value_let == 74 || value_let == 81 || value_let == 75 || value_let == 65) && (suit_let == 99 || suit_let == 100 || suit_let == 104 || suit_let == 115)){
-    temp.value = value_let;
-    temp.suit = suit_let;
+    switch (value_let){
+      case 50: x = 2; break;
+      case 51: x = 3; break;
+      case 52: x = 4; break;
+      case 53: x = 5; break;
+      case 54: x = 6; break;
+      case 55: x = 7; break;
+      case 56: x = 8; break;
+      case 57: x = 9; break;
+      case 48: x = 10; break;
+      case 74: x = 11; break;
+      case 81: x = 12; break;
+      case 75: x = 13; break;
+      case 65: x = 14; break;
+    }
+    switch (suit_let){
+      case 115: y = SPADES; break;
+      case 104: y = HEARTS; break;
+      case 100: y = DIAMONDS; break;
+      case 99: y = CLUBS; break;
+    }
+    
+    temp.value = x;
+    temp.suit = y;
   }
     else {
       printf("Card entered is not valid. Exiting...");
