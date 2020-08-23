@@ -10,18 +10,19 @@ void assert_card_valid(card_t c) {
 }
 
 const char * ranking_to_string(hand_ranking_t r) {
+  char *str;
   switch (r) {
-  case STRAIGHT_FLUSH: printf("STRAIGHT_FLUSH\n"); break;
-  case FOUR_OF_A_KIND: printf("FOUR_OF_A_KIND\n"); break;
-  case FULL_HOUSE: printf("FULL_HOUSE\n"); break;
-  case FLUSH: printf("FLUSH\n"); break;
-  case STRAIGHT: printf("STRAIGHT\n"); break;
-  case THREE_OF_A_KIND: printf("THREE_OF_A_KIND\n"); break;
-  case TWO_PAIR: printf("TWO_PAIR\n"); break;
-  case PAIR: printf("PAIR\n"); break;
-  case NOTHING: printf("NOTHING\n"); break;
+  case STRAIGHT_FLUSH: str = "STRAIGHT_FLUSH"; break;
+  case FOUR_OF_A_KIND: str = "FOUR_OF_A_KIND"; break;
+  case FULL_HOUSE: str = "FULL_HOUSE"; break;
+  case FLUSH: str = "FLUSH"; break;
+  case STRAIGHT: str = "STRAIGHT"; break;
+  case THREE_OF_A_KIND: str = "THREE_OF_A_KIND"; break;
+  case TWO_PAIR: str = "TWO_PAIR"; break;
+  case PAIR: str = "PAIR"; break;
+  case NOTHING: str = "NOTHING"; break;
   }
-  return "";
+  return str;
 }
 
 char value_letter(card_t c) {
@@ -90,7 +91,6 @@ card_t card_from_letters(char value_let, char suit_let) {
       case 100: y = DIAMONDS; break;
       case 99: y = CLUBS; break;
     }
-    
     temp.value = x;
     temp.suit = y;
   }
