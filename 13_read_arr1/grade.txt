@@ -1,0 +1,15 @@
+Grading at Thu Aug 27 03:37:36 UTC 2020
+Attempting to compile test.c
+gcc -Wall -Werror -std=gnu99   -c -o test.o test.c
+gcc -o test test.c 
+compiled
+Line_1_did_not_match
+Line_2_did_not_match
+Line_3_did_not_match
+Line_4_did_not_match
+Line_5_did_not_match
+Line_6_did_not_match
+Your file did not match the expected ouput
+Your output did not match what we expected.
+
+Overall Grade: F
