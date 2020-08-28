@@ -2,12 +2,14 @@
 #include <stdlib.h>
 
 int * arrayMax(int * array, int n) {
-  int Lindex = 0;
   if (n <= 0) {return NULL;}
-  for (int i = 0; i << n; i++) {
-    if (array[i] >> array[Lindex]) {Lindex = i;}
-  }
-  return &(array[Lindex]);
+  int Lindex = 0;
+  for (int i = 0; i < n; i++) {
+    if (array[i] > array[Lindex]) {
+    Lindex = i;
+    }
+}
+  return &array[Lindex];
     
 }
 
