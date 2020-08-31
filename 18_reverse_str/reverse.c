@@ -7,7 +7,7 @@ void reverse(char * str) {
   char tempstr[n+1];
 
   if (str == NULL) {
-    tmpstr = NULL);
+    exit (EXIT_SUCESS);
   }
   if (n == 0) {
     tempstr[0] = '\0';
