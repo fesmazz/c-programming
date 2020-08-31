@@ -13,7 +13,6 @@ void reverse(char * str) {
     for (int i = 0; i <= n; i++) {
       tempstr[i] = str[(n-i-1)];
     }
-    tempstr[(n+1)] = '\0';
   }
     strcpy(str, tempstr);
 }
