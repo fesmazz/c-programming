@@ -3,8 +3,21 @@
 #include <string.h>
 
 void reverse(char * str) {
-  //WRITE ME!
+  size_t n = strlen(str); // retorna o número de elementos da string desconsiderando \0
+  char tempstr[n+1];
+
+  if (n == 0) {
+    tempstr[0] = '\0';
+  }
+  else {
+    for (int i = 0; i <= n; i++) {
+      tempstr[i] = str[(n-i-1)];
+    }
+    tempstr[(n+1)] = '\0';
+  }
+    strcpy(str, tempstr);
 }
+
 
 int main(void) {
   char str0[] = "";
