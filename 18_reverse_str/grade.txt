@@ -1,20 +1,14 @@
-Grading at Mon Aug 31 01:02:42 UTC 2020
+Grading at Mon Aug 31 01:04:48 UTC 2020
 Attempting to compile  reverse.c
-Your file matched the expected output
-Your output matched what we expected
-Removing your main() and replacing it with our own to run more tests...
-#################################################
-testcase2:
- - Your program segfaulted.
-your code failed the testcase
-#################################################
-testcase3:
-Your file matched the expected output
-#################################################
-testcase4:
-Your file matched the expected output
-#################################################
-testcase5:
-Your file matched the expected output
+reverse.c: In function ‘reverse’:
+reverse.c:10:5: error: ‘tmpstr’ undeclared (first use in this function)
+     tmpstr = NULL);
+     ^
+reverse.c:10:5: note: each undeclared identifier is reported only once for each function it appears in
+reverse.c:10:18: error: expected ‘;’ before ‘)’ token
+     tmpstr = NULL);
+                  ^
+reverse.c:10:18: error: expected statement before ‘)’ token
+The code did not compile!
 
-Overall Grade: C
+Overall Grade: F
