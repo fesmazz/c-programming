@@ -3,12 +3,12 @@
 #include <string.h>
 
 void reverse(char * str) {
+  if (str == NULL) {
+    exit (EXIT_FAILURE);
+  }
   size_t n = strlen(str); // retorna o número de elementos da string desconsiderando \0
   char tempstr[n+1];
 
-  if (str == NULL) {
-    exit (EXIT_SUCCESS);
-  }
   if (n == 0) {
     tempstr[0] = '\0';
   }
