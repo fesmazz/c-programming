@@ -1,10 +1,20 @@
-Grading at Mon Aug 31 01:09:20 UTC 2020
+Grading at Mon Aug 31 01:10:23 UTC 2020
 Attempting to compile  reverse.c
-reverse.c: In function ‘reverse’:
-reverse.c:10:11: error: ‘EXIT_SUCESS’ undeclared (first use in this function)
-     exit (EXIT_SUCESS);
-           ^
-reverse.c:10:11: note: each undeclared identifier is reported only once for each function it appears in
-The code did not compile!
+Your file matched the expected output
+Your output matched what we expected
+Removing your main() and replacing it with our own to run more tests...
+#################################################
+testcase2:
+ - Your program segfaulted.
+your code failed the testcase
+#################################################
+testcase3:
+Your file matched the expected output
+#################################################
+testcase4:
+Your file matched the expected output
+#################################################
+testcase5:
+Your file matched the expected output
 
-Overall Grade: F
+Overall Grade: C
