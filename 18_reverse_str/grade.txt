@@ -1,14 +1,10 @@
-Grading at Mon Aug 31 01:04:48 UTC 2020
+Grading at Mon Aug 31 01:09:20 UTC 2020
 Attempting to compile  reverse.c
 reverse.c: In function ‘reverse’:
-reverse.c:10:5: error: ‘tmpstr’ undeclared (first use in this function)
-     tmpstr = NULL);
-     ^
-reverse.c:10:5: note: each undeclared identifier is reported only once for each function it appears in
-reverse.c:10:18: error: expected ‘;’ before ‘)’ token
-     tmpstr = NULL);
-                  ^
-reverse.c:10:18: error: expected statement before ‘)’ token
+reverse.c:10:11: error: ‘EXIT_SUCESS’ undeclared (first use in this function)
+     exit (EXIT_SUCESS);
+           ^
+reverse.c:10:11: note: each undeclared identifier is reported only once for each function it appears in
 The code did not compile!
 
 Overall Grade: F
