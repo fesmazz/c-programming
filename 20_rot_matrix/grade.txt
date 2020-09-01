@@ -1,0 +1,10 @@
+Grading at Tue Sep  1 21:51:23 UTC 2020
+Attempting to compile rotate.c
+Running testcase 1
+valgrind reported memory errors
+Running testcase 1
+valgrind reported memory errors
+Running testcase 1
+valgrind reported memory errors
+
+Overall Grade: F
