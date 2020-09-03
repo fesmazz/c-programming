@@ -1,0 +1,1 @@
+/home/student/learn2prog/22_tests_power/test-power.c
