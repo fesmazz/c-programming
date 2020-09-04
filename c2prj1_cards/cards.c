@@ -122,3 +122,4 @@ card_t card_from_num(unsigned c) {
   
   return temp;
 }
+
