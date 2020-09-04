@@ -1,30 +1,41 @@
-Grading at Fri Sep  4 03:53:34 UTC 2020
+Grading at Fri Sep  4 04:06:07 UTC 2020
 Compiling deck.c
 Compiling cards.c
 cards.c: In function ‘ranking_to_string’:
-cards.c:25:10: error: ‘str’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+cards.c:14:9: error: array size missing in ‘str’
+   char *str[];
+         ^
+cards.c:16:28: error: assignment to expression with array type
+   case STRAIGHT_FLUSH: str = "STRAIGHT_FLUSH"; break;
+                            ^
+cards.c:17:28: error: assignment to expression with array type
+   case FOUR_OF_A_KIND: str = "FOUR_OF_A_KIND"; break;
+                            ^
+cards.c:18:24: error: assignment to expression with array type
+   case FULL_HOUSE: str = "FULL_HOUSE"; break;
+                        ^
+cards.c:19:19: error: assignment to expression with array type
+   case FLUSH: str = "FLUSH"; break;
+                   ^
+cards.c:20:22: error: assignment to expression with array type
+   case STRAIGHT: str = "STRAIGHT"; break;
+                      ^
+cards.c:21:29: error: assignment to expression with array type
+   case THREE_OF_A_KIND: str = "THREE_OF_A_KIND"; break;
+                             ^
+cards.c:22:22: error: assignment to expression with array type
+   case TWO_PAIR: str = "TWO_PAIR"; break;
+                      ^
+cards.c:23:18: error: assignment to expression with array type
+   case PAIR: str = "PAIR"; break;
+                  ^
+cards.c:24:21: error: assignment to expression with array type
+   case NOTHING: str = "NOTHING"; break;
+                     ^
+cards.c:26:10: error: return from incompatible pointer type [-Werror=incompatible-pointer-types]
    return str;
           ^
-cards.c: In function ‘value_letter’:
-cards.c:46:10: error: ‘x’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
-   return x;
-          ^
-cards.c: In function ‘suit_letter’:
-cards.c:59:10: error: ‘x’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
-   return x;
-          ^
-cards.c: In function ‘print_card’:
-cards.c:51:8: error: ‘x’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
-   char x;
-        ^
-cards.c:65:3: error: ‘x’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
-   printf("%c%c", value, suit);
-   ^
-cards.c: In function ‘card_from_letters’:
-cards.c:102:10: error: ‘y’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
-   return temp;
-          ^
-cards.c:102:10: error: ‘x’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+cards.c:26:10: error: function returns address of local variable [-Werror=return-local-addr]
 cc1: all warnings being treated as errors
 Could not compile your cards.c!
 
