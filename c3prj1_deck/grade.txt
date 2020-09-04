@@ -1,42 +1,14 @@
-Grading at Fri Sep  4 04:06:07 UTC 2020
+Grading at Fri Sep  4 04:09:19 UTC 2020
 Compiling deck.c
 Compiling cards.c
-cards.c: In function ‘ranking_to_string’:
-cards.c:14:9: error: array size missing in ‘str’
-   char *str[];
-         ^
-cards.c:16:28: error: assignment to expression with array type
-   case STRAIGHT_FLUSH: str = "STRAIGHT_FLUSH"; break;
-                            ^
-cards.c:17:28: error: assignment to expression with array type
-   case FOUR_OF_A_KIND: str = "FOUR_OF_A_KIND"; break;
-                            ^
-cards.c:18:24: error: assignment to expression with array type
-   case FULL_HOUSE: str = "FULL_HOUSE"; break;
-                        ^
-cards.c:19:19: error: assignment to expression with array type
-   case FLUSH: str = "FLUSH"; break;
-                   ^
-cards.c:20:22: error: assignment to expression with array type
-   case STRAIGHT: str = "STRAIGHT"; break;
-                      ^
-cards.c:21:29: error: assignment to expression with array type
-   case THREE_OF_A_KIND: str = "THREE_OF_A_KIND"; break;
-                             ^
-cards.c:22:22: error: assignment to expression with array type
-   case TWO_PAIR: str = "TWO_PAIR"; break;
-                      ^
-cards.c:23:18: error: assignment to expression with array type
-   case PAIR: str = "PAIR"; break;
-                  ^
-cards.c:24:21: error: assignment to expression with array type
-   case NOTHING: str = "NOTHING"; break;
-                     ^
-cards.c:26:10: error: return from incompatible pointer type [-Werror=incompatible-pointer-types]
-   return str;
-          ^
-cards.c:26:10: error: function returns address of local variable [-Werror=return-local-addr]
-cc1: all warnings being treated as errors
-Could not compile your cards.c!
+Linking cards.o deck.o deck-c4.o and the grader's .o file
+Checking the output of all the functions other than shuffle
+Your file matched the expected output
+ - Those functions seem to work!
+Checking your shuffle results with a 6 card hand...
+  Least common hand: 0.131000%
+  Most  common hand: 0.147050%
+  Perfectly even is: 0.138888%
+ Excellent!
 
-Overall Grade: FAILED
+Overall Grade: A
