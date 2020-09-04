@@ -1,0 +1,31 @@
+Grading at Fri Sep  4 03:53:34 UTC 2020
+Compiling deck.c
+Compiling cards.c
+cards.c: In function ‘ranking_to_string’:
+cards.c:25:10: error: ‘str’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+   return str;
+          ^
+cards.c: In function ‘value_letter’:
+cards.c:46:10: error: ‘x’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+   return x;
+          ^
+cards.c: In function ‘suit_letter’:
+cards.c:59:10: error: ‘x’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+   return x;
+          ^
+cards.c: In function ‘print_card’:
+cards.c:51:8: error: ‘x’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+   char x;
+        ^
+cards.c:65:3: error: ‘x’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+   printf("%c%c", value, suit);
+   ^
+cards.c: In function ‘card_from_letters’:
+cards.c:102:10: error: ‘y’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+   return temp;
+          ^
+cards.c:102:10: error: ‘x’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+cc1: all warnings being treated as errors
+Could not compile your cards.c!
+
+Overall Grade: FAILED
