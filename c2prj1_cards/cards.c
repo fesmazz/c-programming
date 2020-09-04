@@ -10,7 +10,8 @@ void assert_card_valid(card_t c) {
 }
 
 const char * ranking_to_string(hand_ranking_t r) {
-  char *str;
+  //char *str;
+  char *str[];
   switch (r) {
   case STRAIGHT_FLUSH: str = "STRAIGHT_FLUSH"; break;
   case FOUR_OF_A_KIND: str = "FOUR_OF_A_KIND"; break;
@@ -26,7 +27,7 @@ const char * ranking_to_string(hand_ranking_t r) {
 }
 
 char value_letter(card_t c) {
-  char x;
+  char x = 0;
   switch (c.value) {
   case 2: x = 50; break;
   case 3: x = 51; break;
@@ -48,7 +49,7 @@ char value_letter(card_t c) {
 
 
 char suit_letter(card_t c) {
-  char x;
+  char x = 0;
   switch (c.suit) {
   case SPADES: x = 115; break;
   case HEARTS: x = 104; break;
@@ -67,8 +68,8 @@ void print_card(card_t c) {
 
 card_t card_from_letters(char value_let, char suit_let) {
   card_t temp;
-  unsigned x;
-  suit_t y;
+  unsigned x = 0;
+  suit_t y = NUM_SUITS;
   if (((value_let >= 50 && value_let <= 57) || value_let == 48 || value_let == 74 || value_let == 81 || value_let == 75 || value_let == 65) && (suit_let == 99 || suit_let == 100 || suit_let == 104 || suit_let == 115)){
     switch (value_let){
       case 50: x = 2; break;
