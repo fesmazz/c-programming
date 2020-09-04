@@ -10,8 +10,7 @@ void assert_card_valid(card_t c) {
 }
 
 const char * ranking_to_string(hand_ranking_t r) {
-  //char *str;
-  char *str[];
+  char *str = "NOTHING";
   switch (r) {
   case STRAIGHT_FLUSH: str = "STRAIGHT_FLUSH"; break;
   case FOUR_OF_A_KIND: str = "FOUR_OF_A_KIND"; break;
