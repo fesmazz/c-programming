@@ -140,7 +140,7 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
     if (straight  == -1) { // se houver um ace low straight   *temos que verificar se todos os valores de suit são iguais. como?
 
     }
-    else (straight == 1) { // se houver um straight comum
+    else if (straight == 1) { // se houver um straight comum
       int count = 0;
       for (size_t i = index; i < index + 5; i++) {
 	if (hand->cards[i]->suit == hand->cards[i+1]->suit) {
@@ -154,7 +154,9 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
 	return 0; //não existe um straight flush comum	
        }
       }
-  
+    else {
+      return 0;
+    }
   }
 }
 
