@@ -3,30 +3,159 @@
 #include <stdlib.h>
 #include <assert.h>
 
-int card_ptr_comp(const void * vp1, const void * vp2) {
-  return 0;
+int card_ptr_comp(const void * vp1, const void * vp2) { // compara duas cartas
+  const card_t * const *cp1 = vp1; // converting pointer type from const void pointer to a const card_t pointer whose adress cannot be changed (as vp1's adress is also a const).
+  const card_t * const *cp2 = vp2;
+  size_t v_comp = (*cp1)->value - (*cp2)->value; //subtrai valor da carta 1 pelo valor das carta 2 para ver quem é maior
+size_t s_comp = (*cp1)->suit - (*cp2)->suit; // subtrai o naipe da carta 1 do naipe da carta 2 para ver quem é maior 
+  if (v_comp != 0) { //se as cartas não tiverem o mesmo valor
+    return -1 * v_comp; // queremos ordenar de forma decrescente, mas a função qsort que será usada posteriormente ordena de forma crescente. Por isso, invertemos o sinal do return value 
+      }
+  else if (s_comp != 0) { // se as cartas tiverem o mesmo valor, compare os naipes 
+    return -1 * s_comp;
+  }
+  else { // se as cartas forem iguais 
+    return 0;
+  }
 }
 
-suit_t flush_suit(deck_t * hand) {
-  return NUM_SUITS;
+suit_t flush_suit(deck_t * hand) { // verifica se há pelo menos cinco cartas do mesmo naipe (flush) e, caso haja, retorna o naipe. Se não houver, retorna NUM_SUITS
+  int c_spades = 0, c_hearts = 0, c_diamonds = 0, c_clubs = 0;
+  for (int i = 0; i < hand->n_cards; i++) {
+    switch (hand->cards[i]->suit) {
+    case SPADES: c_spades++; break;
+    case HEARTS: c_hearts++; break;
+    case DIAMONDS: c_diamonds++; break;
+    case CLUBS: c_clubs ++; break;
+    default: break;
+    }
+  }
+  if (c_spades >= 5) {
+    return SPADES;
+  }
+  else if (c_hearts >= 5) {
+    return HEARTS;
+  }
+  else if (c_diamonds >= 5) {
+    return DIAMONDS;
+  }
+  else if (c_clubs >= 5) {
+    return CLUBS;
+  }
+  else {
+    return NUM_SUITS;
+  }
 }
 
-unsigned get_largest_element(unsigned * arr, size_t n) {
-  return 0;
+unsigned get_largest_element(unsigned * arr, size_t n) { // pega maior elemento em um array
+  unsigned current_match = arr[0];
+  unsigned best_match = arr[0];
+  for (size_t i = 0; i < n; i++){
+    const unsigned *p1 = &arr[i];
+    if (*p1 > current_match){
+      current_match = *p1;
+      if (current_match > best_match){
+	best_match = current_match;
+      }
+    }
+  }
+       
+  return best_match;
 }
 
-size_t get_match_index(unsigned * match_counts, size_t n,unsigned n_of_akind){
-
-  return 0;
+size_t get_match_index(unsigned * match_counts, size_t n,unsigned n_of_akind){ //pega o índice do array em que está a primeira carta de uma série de cartas iguais (dupla, trio, quadra). o N dá série é o parametro n_of_a_kind
+  for (size_t i = 0; i < n; i++){
+      unsigned const *p1 = &match_counts[i];
+      if (*p1 == n_of_akind) {
+	return i; 
+    }      
+  }
+  printf("n_of_a_kind is not present in match_counts. Aborting...");
+  exit(EXIT_FAILURE);
 }
-ssize_t  find_secondary_pair(deck_t * hand,
+
+ssize_t find_secondary_pair( deck_t * hand,
 			     unsigned * match_counts,
 			     size_t match_idx) {
+  for (size_t i = 0; i < hand->n_cards; i++) {
+    if (hand->cards[i]->value != hand->cards[match_idx]->value) { // se o valor da carta na posição i for diferente do valor da carta que já foi identificada como parte de uma sequência
+      if (match_counts[i] > 1) { // se houver n_of_akind maior do que 1 na posição i
+	return i; //indice = i
+      }
+    }
+  }
   return -1;
 }
 
+int is_n_lenght_straight_at(deck_t *hand, size_t index, int n); //declarando a existencia da função is_n_lenght_straight_at, que ainda não foi definida
+
+int is_ace_low_straight_at (deck_t *hand) {
+  if (hand->cards[0]->value == 14) {   // se houver ao menos um A na mão (que necessariamente estará na primeira posição do array)
+    for (size_t i = 0; i < hand->n_cards; i++){ //procure a primeira carta de valor 5 na mão
+      if (hand->cards[i]->value == 5) {
+	if (is_n_lenght_straight_at(hand, i, 4) == 1) { //se houver um 5 na mão, verifique se existe um straight de 4 cartas a partir desta posição
+	  return 1; // se houver, retorne true(1)
+	}
+	else {
+	  return 0; // se não houver, retorne false(0)
+	}
+      }  
+    } // repita para todos os cincos que encontrar na mão
+  }
+  else { // se não houver A na mão
+    return 0;
+  }
+}
+
+int is_n_lenght_straight_at(deck_t *hand, size_t index, int n) {
+    if (n == 1) { // se houver n cartas com valor seguido
+      if (is_ace_low_straight_at(hand) == 1){ // 
+	return -1; // ace_low straight 
+      }
+      else {
+	return 1; // straight de tamanho n
+      }
+    }    
+    else if (index == hand->n_cards) { //se tivermos chegado ao fim do array sem ter passado por n = 1
+      return 0; // não tem straight de tamanho n
+    }
+    else if (hand->cards[index]->value == hand->cards[index+1]->value +1) { //se o valor de hand->cards[index] for exatamente 1 a mais do que o valor da carta seguinte 
+      is_n_lenght_straight_at(hand, index+1, n-1);
+    }
+    else if  (hand->cards[index]->value == hand->cards[index+1]->value) { // se o valor de hand->cards[index] for igual ao da carta seguinte
+      is_n_lenght_straight_at(hand, index+1, n);
+    }
+    else {
+      return 0; // não tem straight de tamanho n
+    }
+}
+  
+
 int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
-  return 0;
+  int straight = is_n_lenght_straight_at(hand, index, 5) 
+  if (fs == NUM_SUITS) { // proura por qqr straight
+    return straight;
+  }
+  else { // procura por um straight flush 
+    if (straight  == -1) { // se houver um ace low straight   *temos que verificar se todos os valores de suit são iguais. como?
+
+    }
+    else (straight == 1) { // se houver um straight comum
+      int count = 0;
+      for (size_t i = index; i < index + 5; i++) {
+	if (hand->cards[i]->suit == hand->cards[i+1]->suit) {
+	  count++;
+	}
+      }
+      if (count == 5) {
+	return 1; //existe um straight flush comum
+      }
+      else {
+	return 0; //não existe um straight flush comum	
+       }
+      }
+  
+  }
 }
 
 hand_eval_t build_hand_from_match(deck_t * hand,
