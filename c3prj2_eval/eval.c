@@ -5,12 +5,12 @@
 
 int card_ptr_comp(const void * vp1, const void * vp2) { // compara duas cartas
   const card_t * const *cp1 = vp1; // converting pointer type from const void pointer to a const card_t pointer whose adress cannot be changed (as vp1's adress is also a const).
-  const card_t * const *cp2 = vp2;
-  size_t v_comp = (*cp1)->value - (*cp2)->value; //subtrai valor da carta 1 pelo valor das carta 2 para ver quem é maior
-size_t s_comp = (*cp1)->suit - (*cp2)->suit; // subtrai o naipe da carta 1 do naipe da carta 2 para ver quem é maior 
+  const card_t * const *cp2 = vp2;   
+  size_t v_comp = (**cp1).value - (**cp2).value; //subtrai valor da carta 1 pelo valor das carta 2 para ver quem é maior
+  size_t s_comp = (**cp1).suit - (**cp2).suit; // subtrai o naipe da carta 1 do naipe da carta 2 para ver quem é maior 
   if (v_comp != 0) { //se as cartas não tiverem o mesmo valor
     return -1 * v_comp; // queremos ordenar de forma decrescente, mas a função qsort que será usada posteriormente ordena de forma crescente. Por isso, invertemos o sinal do return value 
-      }
+  }
   else if (s_comp != 0) { // se as cartas tiverem o mesmo valor, compare os naipes 
     return -1 * s_comp;
   }
@@ -122,10 +122,10 @@ int is_n_lenght_straight_at(deck_t *hand, size_t index, int n) {
       return 0; // não tem straight de tamanho n
     }
     else if (hand->cards[index]->value == hand->cards[index+1]->value +1) { //se o valor de hand->cards[index] for exatamente 1 a mais do que o valor da carta seguinte 
-      is_n_lenght_straight_at(hand, index+1, n-1);
+     return is_n_lenght_straight_at(hand, index+1, n-1);
     }
     else if  (hand->cards[index]->value == hand->cards[index+1]->value) { // se o valor de hand->cards[index] for igual ao da carta seguinte
-      is_n_lenght_straight_at(hand, index+1, n);
+      return is_n_lenght_straight_at(hand, index+1, n);
     }
       return 0; // não tem straight de tamanho n
 }
@@ -155,25 +155,29 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
     else if (straight == 1) { // se houver um straight comum
       int count = 0;
       unsigned ref = hand->cards[index]->value; //referencia para encontrar cartas do straight no loop por valor
-      for (size_t i = index; i < hand->n_cards; i++) {
-	unsigned curr_value = hand->cards[i]->value;
-	if ((ref == curr_value || ref == curr_value +1 || ref == curr_value +2 || ref == curr_value +3 || ref == curr_value +4) && hand->cards[i]->suit == fs) {
-	  count++;  
+      if (hand->cards[index]->suit != fs){
+	return 0;
+      }
+      else {	
+	for (size_t i = index; i < hand->n_cards; i++) {
+	  unsigned curr_value = hand->cards[i]->value;
+	  if ((ref == curr_value || ref == curr_value +1 || ref == curr_value +2 || ref == curr_value +3 || ref == curr_value +4) && hand->cards[i]->suit == fs) {
+	    count++;  
+	  }
+	}
+	if (count == 5) {
+	  return 1; //existe um straight flush comum
+	}
+	else {
+	  return 0; //não existe um straight flush comum	
 	}
       }
-      if (count >= 5) {
-	return 1; //existe um straight flush comum
-      }
-      else {
-	return 0; //não existe um straight flush comum	
-       }
-      }
+    }
     else {
-      return 0;
+      return 0;      
     }
   }
 }
-
 hand_eval_t build_hand_from_match(deck_t * hand,
 				  unsigned n,
 				  hand_ranking_t what,
@@ -184,19 +188,19 @@ hand_eval_t build_hand_from_match(deck_t * hand,
   for (unsigned i = 0; i < n; i++){
     ans.cards[i] = hand->cards[idx+i];
   }
-  if (n < 5) {    
-    deck_t tmp_hand; // cria uma nova mão removendo as cartas que compõem n of a kind (o par, o trio ou a quadra)
-    tmp_hand.n_cards = hand->n_cards - n;
+  if (n < 5) {
+    unsigned tmp_n = hand->n_cards - n;
+    card_t * tmp_hand[tmp_n]; // cria uma nova mão removendo as cartas que compõem n of a kind (o par, o trio ou a quadra)
     unsigned tmp_idx = 0;
     for (unsigned i = 0; i < hand->n_cards - n; i++) {     
-	if (i < idx && i > (idx+n) && tmp_idx < tmp_hand.n_cards ) {
-	  tmp_hand.cards[tmp_idx] = hand->cards[i];
+      if ((i < idx || i > (idx+n)) && tmp_idx < tmp_n) {
+	  tmp_hand[tmp_idx] = hand->cards[i];
 	  tmp_idx++;
 	}
       }
     tmp_idx = 0;
-    for (unsigned i = n; i < 5; i++) {
-      ans.cards[i] = tmp_hand.cards[tmp_idx];
+    for (unsigned i = n; i < 5; i++) { //copia as melhores cartas restantes para a mão de ans
+      ans.cards[i] = tmp_hand[tmp_idx];
       tmp_idx++;
     }
   }
@@ -206,11 +210,32 @@ hand_eval_t build_hand_from_match(deck_t * hand,
 
 
 int compare_hands(deck_t * hand1, deck_t * hand2) {
-
-  return 0;
+  qsort(hand1->cards, hand1->n_cards, sizeof(card_t *), card_ptr_comp); //sorting hands
+  qsort(hand2->cards, hand2->n_cards, sizeof(card_t *), card_ptr_comp);
+  hand_eval_t eval_1 = evaluate_hand(hand1);
+  hand_eval_t eval_2 = evaluate_hand(hand2);
+  if (eval_1.ranking != eval_2.ranking) {
+    if (eval_1.ranking < eval_2.ranking) {
+      return 1;
+    }
+    else {
+      return -1;
+    }
+  }
+  else {
+    for (int i = 0; i < 5; i++) {
+      if (eval_1.cards[i]->value != eval_2.cards[i]->value) {
+	if (eval_1.cards[i]->value > eval_2.cards[i]->value) {
+	  return 1;
+	}
+	else {
+	  return -1;
+	}
+      }
+    }
+    return 0;
+  }
 }
-
-
 
 //You will write this function in Course 4.
 //For now, we leave a prototype (and provide our
