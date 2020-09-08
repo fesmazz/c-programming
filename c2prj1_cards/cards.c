@@ -10,54 +10,49 @@ void assert_card_valid(card_t c) {
 }
 
 const char * ranking_to_string(hand_ranking_t r) {
-  char *str = "NOTHING";
   switch (r) {
-  case STRAIGHT_FLUSH: str = "STRAIGHT_FLUSH"; break;
-  case FOUR_OF_A_KIND: str = "FOUR_OF_A_KIND"; break;
-  case FULL_HOUSE: str = "FULL_HOUSE"; break;
-  case FLUSH: str = "FLUSH"; break;
-  case STRAIGHT: str = "STRAIGHT"; break;
-  case THREE_OF_A_KIND: str = "THREE_OF_A_KIND"; break;
-  case TWO_PAIR: str = "TWO_PAIR"; break;
-  case PAIR: str = "PAIR"; break;
-  case NOTHING: str = "NOTHING"; break;
+  case STRAIGHT_FLUSH: return "STRAIGHT_FLUSH"; break;
+  case FOUR_OF_A_KIND: return "FOUR_OF_A_KIND"; break;
+  case FULL_HOUSE: return "FULL_HOUSE"; break;
+  case FLUSH: return "FLUSH"; break;
+  case STRAIGHT: return "STRAIGHT"; break;
+  case THREE_OF_A_KIND: return "THREE_OF_A_KIND"; break;
+  case TWO_PAIR: return "TWO_PAIR"; break;
+  case PAIR: return "PAIR"; break;
+  case NOTHING: return "NOTHING"; break;
   }
-  return str;
+  return "?";
 }
 
 char value_letter(card_t c) {
-  char x = 0;
   switch (c.value) {
-  case 2: x = 50; break;
-  case 3: x = 51; break;
-  case 4: x = 52; break;
-  case 5: x = 53; break;
-  case 6: x = 54; break;
-  case 7: x = 55; break;
-  case 8: x = 56; break;
-  case 9: x = 57; break;
-  case 10: x = 48; break;
-  case 11: x = 74; break;
-  case 12: x = 81; break;
-  case 13: x = 75; break;
-  case 14: x = 65; break;
-  }		      
-		 
-  return x;
+  case 2: return 50; break;
+  case 3: return 51; break;
+  case 4: return 52; break;
+  case 5: return 53; break;
+  case 6: return 54; break;
+  case 7: return 55; break;
+  case 8: return 56; break;
+  case 9: return 57; break;
+  case 10: return 48; break;
+  case 11: return 74; break;
+  case 12: return 81; break;
+  case 13: return 75; break;
+  case 14: return 65; break;
+  }
+  return '?';
 }
 
 
-char suit_letter(card_t c) {
-  char x = 0;
+char suit_letter(card_t c) { 
   switch (c.suit) {
-  case SPADES: x = 115; break;
-  case HEARTS: x = 104; break;
-  case DIAMONDS: x = 100; break;
-  case CLUBS: x = 99; break;
+  case SPADES: return 115; break;
+  case HEARTS: return 104; break;
+  case DIAMONDS: return 100; break;
+  case CLUBS: return 99; break;
   case NUM_SUITS: printf("invalid suit. Exiting..."); exit (EXIT_FAILURE);
   }
-  return x;
-  
+  return '?';
 }
 void print_card(card_t c) {
   char value = value_letter(c);

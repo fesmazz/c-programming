@@ -93,7 +93,11 @@ int is_ace_low_straight_at (deck_t *hand) {
   if (hand->cards[0]->value == 14) {   // se houver ao menos um A na mão (que necessariamente estará na primeira posição do array)
     for (size_t i = 0; i < hand->n_cards; i++){ //procure a primeira carta de valor 5 na mão
       if (hand->cards[i]->value == 5) {
-	if (is_n_lenght_straight_at(hand, i, 4) == 1) { //se houver um 5 na mão, verifique se existe um straight de 4 cartas a partir desta posição
+	deck_t new_hand; // cria uma nova mão apenas com as cartas do 5 em diante (para evitar loop na função is_n_straight_at) 
+	new_hand.cards = &hand->cards[i];
+	new_hand.n_cards = hand->n_cards - i;
+	deck_t * new_hand_ptr = &new_hand;
+	if (is_n_lenght_straight_at(new_hand_ptr, 0, 4) == 1) { //verifique se existe um straight de 4 cartas na nova mão
 	  return 1; // se houver, retorne true(1)
 	}
 	else {
@@ -102,21 +106,19 @@ int is_ace_low_straight_at (deck_t *hand) {
       }  
     } // repita para todos os cincos que encontrar na mão
   }
-  else { // se não houver A na mão
-    return 0;
-  }
+  return 0;
 }
 
 int is_n_lenght_straight_at(deck_t *hand, size_t index, int n) {
     if (n == 1) { // se houver n cartas com valor seguido
-      if (is_ace_low_straight_at(hand) == 1){ // 
+      if (hand->cards[0]->value == 14 && is_ace_low_straight_at(hand) == 1){
 	return -1; // ace_low straight 
       }
       else {
 	return 1; // straight de tamanho n
       }
     }    
-    else if (index == hand->n_cards) { //se tivermos chegado ao fim do array sem ter passado por n = 1
+    else if (index == hand->n_cards - 1) { //se tivermos chegado ao fim do array sem ter passado por n = 1
       return 0; // não tem straight de tamanho n
     }
     else if (hand->cards[index]->value == hand->cards[index+1]->value +1) { //se o valor de hand->cards[index] for exatamente 1 a mais do que o valor da carta seguinte 
@@ -125,29 +127,41 @@ int is_n_lenght_straight_at(deck_t *hand, size_t index, int n) {
     else if  (hand->cards[index]->value == hand->cards[index+1]->value) { // se o valor de hand->cards[index] for igual ao da carta seguinte
       is_n_lenght_straight_at(hand, index+1, n);
     }
-    else {
       return 0; // não tem straight de tamanho n
-    }
 }
   
 
 int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
-  int straight = is_n_lenght_straight_at(hand, index, 5) 
+  int straight = is_n_lenght_straight_at(hand, index, 5); 
   if (fs == NUM_SUITS) { // proura por qqr straight
     return straight;
   }
   else { // procura por um straight flush 
-    if (straight  == -1) { // se houver um ace low straight   *temos que verificar se todos os valores de suit são iguais. como?
-
+    if (straight  == -1) { // se houver um ace low straight   
+      int count = 0;
+      for (size_t i = index; i < hand->n_cards; i++) {
+	unsigned curr_value = hand->cards[i]->value;
+	if ((curr_value == 14 || curr_value == 5 || curr_value == 4 || curr_value == 3 || curr_value == 2) && hand->cards[i]->suit == fs) {
+	  count ++;
+	}
+      }
+      if (count >= 5) {
+	return 1; //existe um ace low straight flush
+      }
+      else {
+	return 0; //não existe um ace low straight flush	     
+      }
     }
     else if (straight == 1) { // se houver um straight comum
       int count = 0;
-      for (size_t i = index; i < index + 5; i++) {
-	if (hand->cards[i]->suit == hand->cards[i+1]->suit) {
-	  count++;
+      unsigned ref = hand->cards[index]->value; //referencia para encontrar cartas do straight no loop por valor
+      for (size_t i = index; i < hand->n_cards; i++) {
+	unsigned curr_value = hand->cards[i]->value;
+	if ((ref == curr_value || ref == curr_value +1 || ref == curr_value +2 || ref == curr_value +3 || ref == curr_value +4) && hand->cards[i]->suit == fs) {
+	  count++;  
 	}
       }
-      if (count == 5) {
+      if (count >= 5) {
 	return 1; //existe um straight flush comum
       }
       else {
@@ -165,7 +179,28 @@ hand_eval_t build_hand_from_match(deck_t * hand,
 				  hand_ranking_t what,
 				  size_t idx) {
 
-  hand_eval_t ans;
+  hand_eval_t ans; //variável que contém melhor mão de 5 cartas do tipo N of a Kind e descrição do ranking
+  ans.ranking = what;
+  for (unsigned i = 0; i < n; i++){
+    ans.cards[i] = hand->cards[idx+i];
+  }
+  if (n < 5) {    
+    deck_t tmp_hand; // cria uma nova mão removendo as cartas que compõem n of a kind (o par, o trio ou a quadra)
+    tmp_hand.n_cards = hand->n_cards - n;
+    unsigned tmp_idx = 0;
+    for (unsigned i = 0; i < hand->n_cards - n; i++) {     
+	if (i < idx && i > (idx+n) && tmp_idx < tmp_hand.n_cards ) {
+	  tmp_hand.cards[tmp_idx] = hand->cards[i];
+	  tmp_idx++;
+	}
+      }
+    tmp_idx = 0;
+    for (unsigned i = n; i < 5; i++) {
+      ans.cards[i] = tmp_hand.cards[tmp_idx];
+      tmp_idx++;
+    }
+  }
+  
   return ans;
 }
 
