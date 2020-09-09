@@ -199,7 +199,7 @@ hand_eval_t build_hand_from_match(deck_t * hand,
     card_t * tmp_hand[tmp_n]; // cria uma nova mão removendo as cartas que compõem n of a kind (o par, o trio ou a quadra)
     unsigned tmp_idx = 0;
     for (unsigned i = 0; i < hand->n_cards; i++) {     
-      if ((i < idx || i > (idx+n)) && tmp_idx < tmp_n) {
+      if ((i < idx || i >= (idx+n)) && tmp_idx < tmp_n) {
 	  tmp_hand[tmp_idx] = hand->cards[i];
 	  tmp_idx++;
 	}
