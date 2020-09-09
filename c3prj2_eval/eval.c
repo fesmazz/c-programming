@@ -188,7 +188,13 @@ hand_eval_t build_hand_from_match(deck_t * hand,
   for (unsigned i = 0; i < n; i++){
     ans.cards[i] = hand->cards[idx+i];
   }
-  if (n < 5) {
+  if (ans.ranking == NOTHING) {
+    for (unsigned i = 0; i < 5; i++) {
+      ans.cards[i] = hand->cards[i];
+    }
+  }
+  else {
+    
     unsigned tmp_n = hand->n_cards - n;
     card_t * tmp_hand[tmp_n]; // cria uma nova mão removendo as cartas que compõem n of a kind (o par, o trio ou a quadra)
     unsigned tmp_idx = 0;
