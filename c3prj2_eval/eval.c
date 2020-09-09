@@ -89,19 +89,15 @@ ssize_t find_secondary_pair( deck_t * hand,
 
 int is_n_lenght_straight_at(deck_t *hand, size_t index, int n); //declarando a existencia da função is_n_lenght_straight_at, que ainda não foi definida
 
-int is_ace_low_straight_at (deck_t *hand) {
-  if (hand->cards[0]->value == 14) {   // se houver ao menos um A na mão (que necessariamente estará na primeira posição do array)
+int is_ace_low_straight_at (deck_t *hand, size_t index) {
+  if (hand->cards[index]->value == 14) {   
     for (size_t i = 0; i < hand->n_cards; i++){ //procure a primeira carta de valor 5 na mão
       if (hand->cards[i]->value == 5) {
-	deck_t new_hand; // cria uma nova mão apenas com as cartas do 5 em diante (para evitar loop na função is_n_straight_at) 
-	new_hand.cards = &hand->cards[i];
-	new_hand.n_cards = hand->n_cards - i;
-	deck_t * new_hand_ptr = &new_hand;
-	if (is_n_lenght_straight_at(new_hand_ptr, 0, 4) == 1) { //verifique se existe um straight de 4 cartas na nova mão
-	  return 1; // se houver, retorne true(1)
+	if (is_n_lenght_straight_at(hand, i, 4) == 1) { //verifique se existe um straight de 4 cartas na nova mão
+	  return -1; // se houver
 	}
 	else {
-	  return 0; // se não houver, retorne false(0)
+	  return 0; // se não houver
 	}
       }  
     } // repita para todos os cincos que encontrar na mão
@@ -110,29 +106,27 @@ int is_ace_low_straight_at (deck_t *hand) {
 }
 
 int is_n_lenght_straight_at(deck_t *hand, size_t index, int n) {
-    if (n == 1) { // se houver n cartas com valor seguido
-      if (hand->cards[0]->value == 14 && is_ace_low_straight_at(hand) == 1){
-	return -1; // ace_low straight 
-      }
-      else {
-	return 1; // straight de tamanho n
-      }
-    }    
-    else if (index == hand->n_cards - 1) { //se tivermos chegado ao fim do array sem ter passado por n = 1
-      return 0; // não tem straight de tamanho n
+  if (n == 1) { // se houver n cartas com valor seguido
+      return 1; // straight de tamanho n    
     }
-    else if (hand->cards[index]->value == hand->cards[index+1]->value +1) { //se o valor de hand->cards[index] for exatamente 1 a mais do que o valor da carta seguinte 
-     return is_n_lenght_straight_at(hand, index+1, n-1);
+  else if (index == hand->n_cards - 1) { //se tivermos chegado ao fim do array sem ter passado por n = 1
+    return 0; // não tem straight de tamanho n
     }
-    else if  (hand->cards[index]->value == hand->cards[index+1]->value) { // se o valor de hand->cards[index] for igual ao da carta seguinte
-      return is_n_lenght_straight_at(hand, index+1, n);
-    }
-      return 0; // não tem straight de tamanho n
+  else if (hand->cards[index]->value == hand->cards[index+1]->value +1) { //se o valor de hand->cards[index] for exatamente 1 a mais do que o valor da carta seguinte 
+    return is_n_lenght_straight_at(hand, index+1, n-1);
+  }
+  else if  (hand->cards[index]->value == hand->cards[index+1]->value) { // se o valor de hand->cards[index] for igual ao da carta seguinte
+    return is_n_lenght_straight_at(hand, index+1, n);
+  }
+  return 0; // não tem straight de tamanho n
 }
   
 
 int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
-  int straight = is_n_lenght_straight_at(hand, index, 5); 
+  int straight = is_n_lenght_straight_at(hand, index, 5);
+  if (hand->cards[0]->value == 14 && straight == 0) {
+    return is_ace_low_straight_at(hand, index);
+  }  
   if (fs == NUM_SUITS) { // proura por qqr straight
     return straight;
   }
