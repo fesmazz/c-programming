@@ -15,7 +15,7 @@ void check_file(FILE * input) {
     }
   }
   if (count != 10){
-    fprintf(stderr, "File is not the right size");
+    fprintf(stderr, "File is not the right size\n");
     exit (EXIT_FAILURE);
   }
   rewind(input);
