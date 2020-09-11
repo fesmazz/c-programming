@@ -2,13 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-void check_characters(FILE * input) {
+void check_file(FILE * input) {
   int c;
+  int count = 0;
   while ((c = fgetc(input)) != EOF) {
     if (c > 255) {
 	fprintf(stderr, "Invalid characters detected on file");
-      	exit (EXIT_FAILURE);
+      	exit (EXIT_FAILURE);	
     }
+    if (c == '\n') {
+      count++;
+    }
+  }
+  if (count != 10){
+    fprintf(stderr, "File is not the right size");
+    exit (EXIT_FAILURE);
   }
   rewind(input);
 }
@@ -69,7 +77,7 @@ int main (int argc, char ** argv) {
     exit(EXIT_FAILURE);
   }
   char matrix [10][12];
-  check_characters(input_file);
+  check_file(input_file);
   write_input_to_arr(input_file, matrix, 10, 12);
   rotate(matrix);
   print_matrix(matrix, 10);
