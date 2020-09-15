@@ -28,6 +28,15 @@ int main(int argc, char ** argv) {
       strcpy(lines[line_count], curr_line);
       line_count++;
     }
+    if (lines == NULL) {
+    fprintf(stderr, "No lines found to sort\n");   
+    exit(EXIT_FAILURE);
+    }
+    sortData(lines, line_count);
+    for (int i = 0; i < line_count; i++) {
+      fprintf(stdout, "%s", lines[i]);
+      free(lines[i]);
+    }
   }
   else {
     for (int i = 1; i <= argc-1; i++) {
@@ -47,19 +56,20 @@ int main(int argc, char ** argv) {
         strcpy(lines[line_count], curr_line);
         line_count++;
       }
-      fclose(input);
-    } 
+       fclose(input);
+       if (lines == NULL) {
+	 fprintf(stderr, "No lines found to sort\n");   
+	 exit(EXIT_FAILURE);
+       }
+       sortData(lines, line_count);
+       for (int i = 0; i < line_count; i++) {
+	 fprintf(stdout, "%s", lines[i]);
+	 free(lines[i]);
+       }
+       line_count = 0;
+    }
   }
   free(curr_line);
-  if (lines == NULL) {
-    fprintf(stderr, "No lines found to sort\n");   
-    exit(EXIT_FAILURE);
-  }
-  sortData(lines, line_count);
-  for (int i = 0; i < line_count; i++) {
-    fprintf(stdout, "%s", lines[i]);
-    free(lines[i]);
-  }
-  free (lines);  
+  free(lines);  
   return EXIT_SUCCESS;
 }
