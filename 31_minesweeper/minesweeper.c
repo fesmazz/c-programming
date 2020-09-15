@@ -46,10 +46,10 @@ board_t * makeBoard(int w, int h, int numMines) {
   b->height = h;
   b->totalMines = numMines;
   b->board = malloc(h * sizeof(b->board));
-  for (int y = 0; y < h, y++){
+  for (int y = 0; y < h; y++){
     b->board[y] = malloc (w * sizeof(*(b->board)));
-    for (x = 0; x < w; x++) {
-      board[y][x] = UNKNOWN;
+    for (int x = 0; x < w; x++) {
+      b->board[y][x] = UNKNOWN;
     }
   }
   for(int i = 0; i < numMines; i++) {
@@ -112,8 +112,8 @@ int countMines(board_t * b, int x, int y) {
   int maxHeight = b->height;
   int maxWidth = b->width;
   int count = 0;
-  for (int h = -1; h <= 1, h++) {
-    for (int w = -1; w <= 1, w++) {
+  for (int h = -1; h <= 1; h++) {
+    for (int w = -1; w <= 1; w++) {
       if ((y+h) < maxHeight && (x+w) < maxWidth) {
 	if (IS_MINE(b->board[y+h][x+w])) {
 	  count++;
@@ -145,7 +145,7 @@ int click (board_t * b, int x, int y) {
 
 int checkWin(board_t * b) {
   for (int y = 0; y < b->height; y++) {
-    for (int x = 0, x < b->width; x++) {
+    for (int x = 0; x < b->width; x++) {
       if (b->board[y][x] == UNKNOWN){
 	return 0;
       }
@@ -155,10 +155,11 @@ int checkWin(board_t * b) {
 }
 
 void freeBoard(board_t * b) {
-  for (int y = 0; y < b->height, y++){
+  for (int y = 0; y < b->height; y++){
     free(b->board[y]);
   }
   free (b->board);
+  free (b);
 }
 
 int readInt(char ** linep, size_t * lineszp) {
