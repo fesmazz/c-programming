@@ -38,7 +38,7 @@ int main(int argc, char ** argv) {
          for (int i = 0; i < line_count; i++) {
             free(lines[i]);
           }
-          free(lines); 
+         free(lines); 
          exit(EXIT_FAILURE);
       }
        while (getline(&curr_line, &sz, input) >= 0) {
