@@ -33,7 +33,12 @@ int main(int argc, char ** argv) {
     for (int i = 1; i <= argc-1; i++) {
       FILE * input = fopen(argv[i], "r");
       if (input == NULL) {
-         fprintf(stderr, "Error opening file: %s", argv[i]);
+         fprintf(stderr, "Error opening file: %s\n", argv[i]);
+         free (curr_line);
+         for (int i = 0; i < line_count; i++) {
+            free(lines[i]);
+          }
+          free(lines); 
          exit(EXIT_FAILURE);
       }
        while (getline(&curr_line, &sz, input) >= 0) {
@@ -46,6 +51,10 @@ int main(int argc, char ** argv) {
     } 
   }
   free(curr_line);
+  if (lines == NULL) {
+    fprintf(stderr, "No lines found to sort\n");   
+    exit(EXIT_FAILURE);
+  }
   sortData(lines, line_count);
   for (int i = 0; i < line_count; i++) {
     fprintf(stdout, "%s", lines[i]);
