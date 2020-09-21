@@ -51,6 +51,7 @@ void freeCounts(counts_t * c) {
     free(c->strings[i]->string);
     free(c->strings[i]);
   }
+  free(c->strings);
   free(c);
   return;
 }
