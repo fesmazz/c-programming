@@ -6,12 +6,12 @@
 #include "outname.h"
 
 counts_t * countFile(const char * filename, kvarray_t * kvPairs) {
-  counts_t * c = createCounts();
   FILE * input = fopen(filename, "r");
   if (input == NULL) {
     fprintf(stderr, "Couldn't open file %s. Check the file name and try again\n", filename);
     exit(EXIT_FAILURE);
   }
+  counts_t * c = createCounts();
   char * curr_line = NULL;
   size_t sz = 0;
   while ((getline(&curr_line, &sz, input) >= 0)) {
@@ -34,7 +34,8 @@ counts_t * countFile(const char * filename, kvarray_t * kvPairs) {
 
 int main(int argc, char ** argv) {
   if(argc < 3){
-    fprintf(stderr, "Uso: chaves.txt lista.txt");
+    fprintf(stderr, "Uso: chaves.txt lista.txt\n");
+    exit(EXIT_FAILURE);
   }
   kvarray_t * kv = readKVs(argv[1]);
   for (int i = 2; i < argc; i++) {
