@@ -1,56 +1,12 @@
-Grading at Tue Sep 22 04:02:13 UTC 2020
+Grading at Tue Sep 22 04:16:28 UTC 2020
 Compiling deck.c -> deck.o
-deck.c: In function ‘add_card_to’:
-deck.c:61:34: error: incompatible types when assigning to type ‘card_t * {aka struct card_tag *}’ from type ‘card_t {aka struct card_tag}’
-   deck->cards[deck->n_cards - 1] = c;
-                                  ^
-deck.c: In function ‘add_empty_card’:
-deck.c:69:10: error: return from incompatible pointer type [-Werror=incompatible-pointer-types]
-   return &(deck->cards[deck->n_cards - 1]);
-          ^
-deck.c: In function ‘make_deck_exclude’:
-deck.c:73:17: error: invalid initializer
-   deck_t deck = malloc(sizeof(deck));
-                 ^
-deck.c:82:10: error: function returns address of local variable [-Werror=return-local-addr]
-   return &deck;
-          ^
 deck.c: In function ‘build_remaining_deck’:
-deck.c:86:27: error: invalid initializer
-   deck_t excluded_cards = malloc(sizeof(excluded_cards));
-                           ^
-deck.c:91:19: error: incompatible type for argument 1 of ‘add_card_to’
-       add_card_to(excluded_cards, hands[i]->cards[j]);
-                   ^
-deck.c:58:6: note: expected ‘deck_t * {aka struct deck_tag *}’ but argument is of type ‘deck_t {aka struct deck_tag}’
- void add_card_to(deck_t * deck, card_t c){
-      ^
 deck.c:91:35: error: incompatible type for argument 2 of ‘add_card_to’
        add_card_to(excluded_cards, hands[i]->cards[j]);
                                    ^
 deck.c:58:6: note: expected ‘card_t {aka struct card_tag}’ but argument is of type ‘card_t * {aka struct card_tag *}’
  void add_card_to(deck_t * deck, card_t c){
       ^
-deck.c:94:47: error: incompatible type for argument 1 of ‘make_deck_exclude’
-   deck_t * remaining_deck = make_deck_exclude(excluded_cards);
-                                               ^
-deck.c:72:10: note: expected ‘deck_t * {aka struct deck_tag *}’ but argument is of type ‘deck_t {aka struct deck_tag}’
- deck_t * make_deck_exclude(deck_t * excluded_cards){
-          ^
-deck.c:95:13: error: incompatible type for argument 1 of ‘free_deck’
-   free_deck(excluded_cards);
-             ^
-In file included from deck.c:4:0:
-deck.h:19:6: note: expected ‘deck_t * {aka struct deck_tag *}’ but argument is of type ‘deck_t {aka struct deck_tag}’
- void free_deck(deck_t * deck) ;
-      ^
-deck.c:96:10: error: incompatible types when returning type ‘deck_t {aka struct deck_tag}’ but ‘deck_t * {aka struct deck_tag *}’ was expected
-   return *remaining_deck;
-          ^
-deck.c:97:1: error: control reaches end of non-void function [-Werror=return-type]
- }
- ^
-cc1: all warnings being treated as errors
 Compilation of deck.c failed
 
 Overall Grade: F
