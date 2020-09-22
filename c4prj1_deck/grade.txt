@@ -1,15 +1,9 @@
-Grading at Tue Sep 22 05:26:15 UTC 2020
+Grading at Tue Sep 22 05:28:12 UTC 2020
 Compiling deck.c -> deck.o
 deck.c: In function ‘build_remaining_deck’:
 deck.c:92:63: error: invalid operands to binary != (have ‘card_t {aka struct card_tag}’ and ‘int’)
-       if (deck_contains(excluded_cards, *(hands[i]->cards[j]) != 1) {
+       if (deck_contains(excluded_cards, *(hands[i]->cards[j]) != 1)) {
                                                                ^
-deck.c:92:69: error: expected ‘)’ before ‘{’ token
-       if (deck_contains(excluded_cards, *(hands[i]->cards[j]) != 1) {
-                                                                     ^
-deck.c:95:5: error: expected expression before ‘}’ token
-     }
-     ^
 Compilation of deck.c failed
 
 Overall Grade: F
