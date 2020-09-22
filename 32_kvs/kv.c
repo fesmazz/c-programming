@@ -15,7 +15,7 @@ char * get_key(char * line, size_t line_number) {
 }
 
 char * get_value(char * line) {
-  char * temp = strchr(line, '=') + 1;
+  char * temp = strchr(line, '=') +1;
   char * value = malloc((1+strlen(temp)) * sizeof(*value));
   strcpy (value, temp);
   *(strchr(value, '\n')) = '\0';
