@@ -89,7 +89,7 @@ deck_t * build_remaining_deck(deck_t ** hands, size_t n_hands) {
   excluded_cards->n_cards = 0;
   for (size_t i = 0; i < n_hands; i++) {
     for(size_t j; j < hands[i]->n_cards; j++) {
-      if (deck_contains(excluded_cards, *(hands[i]->cards[j]) != 1) {
+      if (deck_contains(excluded_cards, *(hands[i]->cards[j]) != 1)) {
         add_card_to(excluded_cards, *(hands[i]->cards[j]));
       }
     }
