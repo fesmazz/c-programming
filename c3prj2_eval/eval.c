@@ -74,7 +74,7 @@ size_t get_match_index(unsigned * match_counts, size_t n,unsigned n_of_akind){ /
   exit(EXIT_FAILURE);
 }
 
-ssize_t find_secondary_pair( deck_t * hand,
+size_t find_secondary_pair( deck_t * hand,
 			     unsigned * match_counts,
 			     size_t match_idx) {
   for (size_t i = 0; i < hand->n_cards; i++) {
