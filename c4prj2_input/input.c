@@ -10,14 +10,15 @@ deck_t * hand_from_string(const char * str, future_cards_t * fc) { // arrumar es
         char value_let = *str;
         char suit_let = *(str++);
         if (value_let == '?'){
-            int unk_index = atoi(suit_let);
+            int unk_index = atoi(suit_let); // não funciona atualmente pq suit_let não é string
             card_t * future_card = add_empty_card(hand);
             add_future_card(fc, unk_index, future_card);
         }
+        else {
         //printf("DEBUG: Adding card %c%c\n", value_let, suit_let);
         card_t c = card_from_letters(value_let, suit_let);
         add_card_to(hand, c);
-        
+        }
     }
     return hand;
 }
