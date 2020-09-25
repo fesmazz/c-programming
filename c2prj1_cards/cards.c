@@ -90,8 +90,8 @@ card_t card_from_letters(char value_let, char suit_let) {
     temp.suit = y;
   }
     else {
-      printf("Card entered is not valid. Exiting...");
-      exit(EXIT_FAILURE);
+      //printf("Card entered is not valid.\n");
+      //exit(EXIT_FAILURE);
     }
   
   return temp;
