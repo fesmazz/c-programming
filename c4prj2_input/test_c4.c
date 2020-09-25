@@ -12,12 +12,6 @@ struct empty_hands_tag {
 };
 typedef struct empty_hands_tag empty_hands_t;
 
-void print_runtest(char * text) {
-    printf("----------------------------------------------\n");
-    printf("-             Running test %s                 -\n", text);
-    printf("----------------------------------------------\n");
-    printf("\n");
-}
 void create_empty_hands(empty_hands_t * hands, size_t n) {
     hands->hands = malloc(n * sizeof(*(hands->hands)));
     for(size_t i = 0; i < n; i++) {
@@ -37,6 +31,7 @@ void create_empty_hands(empty_hands_t * hands, size_t n) {
     }
     return;       
 }
+
 void create_hand_n(deck_t * hand, size_t n) {
     for (size_t i = 0; i < n; i++){
         unsigned r = random() % 51;
@@ -47,11 +42,19 @@ void create_hand_n(deck_t * hand, size_t n) {
     fprintf(stdout,"\nA mão tem %ld cartas \n", hand->n_cards);
     return;
 }
+
 void print_info (deck_t * hand, size_t id) {
     fprintf(stdout, "A mão %ld tem as seguintes %ld cartas: ", id, hand->n_cards);
     print_hand(hand);
     fprintf(stdout,"\n");
     return;
+}
+
+void print_runtest(char * text) {
+    printf("----------------------------------------------\n");
+    printf("-             Running test %s                 -\n", text);
+    printf("----------------------------------------------\n");
+    printf("\n");
 }
 
 void test1(void) {
@@ -220,6 +223,7 @@ void test2(void) {
     fprintf(stdout, "Teste 2 completo\n");
 
 }
+
 int main(void) {
     print_runtest("1");
     test1();
