@@ -17,4 +17,5 @@ cards.o: cards.h
 deck.o: deck.h
 eval.c: eval.h
 future.c: future.h
+input.c: input.h
 main.o: %.h

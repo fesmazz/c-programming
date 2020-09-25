@@ -5,6 +5,7 @@
 #include "cards.h"
 #include "deck.h"
 #include "eval.h"
+#include "input.h"
 
 struct empty_hands_tag {
     deck_t * hands;
@@ -224,12 +225,45 @@ void test2(void) {
 
 }
 
-int main(void) {
+void test3 (char * filename) {
+    fprintf(stdout, "Abrindo arquivo %s\n", filename);
+    FILE * input = fopen(filename, "r");
+    if (input == NULL) {
+        fprintf(stderr, "Falha ao abrir o arquivo %s. O teste será encerrado\n", filename);
+        exit(EXIT_FAILURE);
+    }
+
+    fprintf(stdout, "Definindo e inicializando variáveis...\n");
+    size_t n_hands = 0;
+    future_cards_t * fc = malloc(sizeof(*fc));
+    fc->decks= NULL;
+    fc->n_decks= 0;
+    deck_t ** decks = NULL;
+
+    fprintf(stdout, "Lendo arquivo %s...\n", filename);
+    decks = read_input(input, &n_hands, fc);
+    fprintf(stdout, " %s foi lido com sucesso!\n\n Verificando se as mãos foram registradas corretamente...\n\n", filename);
+    for(size_t i = 0; i < n_hands; i++) {
+        print_info(decks[i], i);
+    }
+    return;
+}
+
+int main(int argc, char ** argv) {
     print_runtest("1");
     test1();
     print_runtest("2");
     test2();
     fprintf(stdout,"\n");
+    if (argc != 2) {
+        fprintf(stdout, "O teste 3 necessita de uma lista de mãos no formato *.txt \n");
+        fprintf(stdout, "O teste 3 será pulado \n");
+    }
+    else {
+        print_runtest("3");
+        test3(argv[1]);
+        fprintf(stdout, "\n\n Todos os testes concluídos!! \n");
+    }
 
 return EXIT_SUCCESS;
 }
