@@ -149,6 +149,7 @@ void test2(void) {
         fprintf(stdout,"\n");
     }
 
+    fprintf(stdout,"\n");
     fprintf(stdout,"Criando um baralho de 52 cartas...\n");
     deck_t * deck = malloc(sizeof(*deck));
     deck->cards = NULL;
@@ -190,6 +191,34 @@ void test2(void) {
         print_hand(&(h->hands[i]));
         fprintf(stdout,"\n");
     }
+
+    fprintf(stdout,"\n");
+    fprintf(stdout, "Liberando memória alocada no Heap....\n\n");
+
+    for(size_t i = 0; i < 4; i++) {
+        //printf("Liberado mão %ld \n", i);
+        free(h->hands[i].cards);
+    }
+    for(size_t i = 0; i < 20; i++) {
+        //printf("Liberado carta %ld \n", i);
+        free(h->cards[i]);
+    }
+    free(h->hands);
+    free(h->cards);
+    free(h);
+
+    for(size_t i = 0; i < fc->n_decks; i++) {
+        //printf("Liberado fc->deck[%ld].cards\n", i);
+        free(fc->decks[i].cards);
+    }
+    free (fc->decks);
+    free (fc);
+    free_deck(deck);
+
+
+    fprintf(stdout,"\n");
+    fprintf(stdout, "Teste 2 completo\n");
+
 }
 int main(void) {
     print_runtest("1");
