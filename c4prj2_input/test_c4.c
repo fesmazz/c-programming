@@ -164,9 +164,9 @@ void test2(void) {
     }
     print_hand(deck);
     fprintf(stdout,"\n");
-    fprintf(stdout,"Embaralhando 1000000 vezes... ");
+    fprintf(stdout,"Embaralhando 100 vezes... ");
 
-    for (unsigned i = 0; i < 1000000; i++) {
+    for (unsigned i = 0; i < 100; i++) {
       shuffle(deck);
     }
 
@@ -242,10 +242,38 @@ void test3 (char * filename) {
 
     fprintf(stdout, "Lendo arquivo %s...\n", filename);
     decks = read_input(input, &n_hands, fc);
-    fprintf(stdout, " %s foi lido com sucesso!\n\n Verificando se as mãos foram registradas corretamente...\n\n", filename);
+    fprintf(stdout, "%s foi lido com sucesso!\n\nVerificando se as mãos foram registradas corretamente...\n\n", filename);
+    fprintf(stdout, "Criando um baralho sem as cartas já existentes...\n");
+    deck_t * deck = build_remaining_deck(decks, n_hands);
+    shuffle(deck);
+    print_hand(deck); printf("\n");
+    fprintf(stdout, "\nVerificando fc->decks\n");
+    for(size_t i = 0; i < n_hands; i++) {
+        print_info(fc->decks, i);
+    }
+    fprintf(stdout, "Definindo cartas desconhecidas\n\n");
+    future_cards_from_deck(deck, fc);
+    fprintf(stdout, "\nVerificando fc->decks\n");
+     for(size_t i = 0; i < n_hands; i++) {
+        print_info(fc->decks, i);
+    }
     for(size_t i = 0; i < n_hands; i++) {
         print_info(decks[i], i);
     }
+    fprintf(stdout, "\nLiberando memória alocada no Heap....\n\n");
+
+    if (fclose(input) != 0) { fprintf(stderr, "Erro ao fechar arquivo %s\n", filename);}
+
+    for(size_t i = 0; i < fc->n_decks; i++) {
+        free(fc->decks[i].cards);
+    }
+    free (fc->decks);
+    free (fc);
+    for(size_t i = 0; i < n_hands; i++) {
+        free_deck(decks[i]);
+    }
+    free_deck(deck);
+
     return;
 }
 
@@ -257,12 +285,12 @@ int main(int argc, char ** argv) {
     fprintf(stdout,"\n");
     if (argc != 2) {
         fprintf(stdout, "O teste 3 necessita de uma lista de mãos no formato *.txt \n");
-        fprintf(stdout, "O teste 3 será pulado \n");
+        fprintf(stdout, "O teste 3 será pulado\n");
     }
     else {
         print_runtest("3");
         test3(argv[1]);
-        fprintf(stdout, "\n\n Todos os testes concluídos!! \n");
+        fprintf(stdout, "\n\nTodos os testes concluídos!!\n");
     }
 
 return EXIT_SUCCESS;

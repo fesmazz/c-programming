@@ -1,25 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "input.h"
 
-deck_t * hand_from_string(const char * str, future_cards_t * fc) { // arrumar esta função para ler elementos da string corretamente como chars
+deck_t * hand_from_string(const char * str, future_cards_t * fc) { 
     deck_t * hand = malloc(sizeof(*hand));
     hand->cards = NULL;
     hand->n_cards = 0;
-    while (str != NULL) {
-        char value_let = *str;
-        char suit_let = *(str++);
+    char * tokbuffer = strdup(str);
+    char * tokbuffer_ptr = tokbuffer;
+    *(strchr(tokbuffer, '\n')) = '\0'; //excluindo newline do buffer
+    printf("DEBUG: tokbuffer = %s\n", tokbuffer);
+    for (char * p = strtok(tokbuffer, " "); p != NULL; p = strtok(NULL, " ")) {
+        //printf("DEBUG: p inside the loop is = %s\n", p);
+        char value_let = p[0];
+        char suit_let = p[1];
         if (value_let == '?'){
-            int unk_index = atoi(suit_let); // não funciona atualmente pq suit_let não é string
+            int unk_index = suit_let - '0'; //converte o valor de suit_let para int
+            printf("DEBUG: For card %c%c, index inside the loop is = %d\n", p[0], p[1], unk_index);
             card_t * future_card = add_empty_card(hand);
             add_future_card(fc, unk_index, future_card);
         }
         else {
-        //printf("DEBUG: Adding card %c%c\n", value_let, suit_let);
         card_t c = card_from_letters(value_let, suit_let);
         add_card_to(hand, c);
         }
     }
+    free(tokbuffer_ptr);
     return hand;
 }
 
