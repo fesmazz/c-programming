@@ -27,7 +27,6 @@ void add_future_card(future_cards_t *fc, size_t index, card_t * ptr){
 
 void future_cards_from_deck(deck_t * deck, future_cards_t * fc) {
     if(fc->n_decks == 0) {
-        fprintf(stderr, "There are no unknown cards\n");
         return;
     }
     size_t card_n = 0;

@@ -11,17 +11,16 @@ deck_t * hand_from_string(const char * str, future_cards_t * fc) {
     char * tokbuffer_ptr = tokbuffer;
     *(strchr(tokbuffer, '\n')) = '\0'; //excluindo newline do buffer
     for (char * p = strtok(tokbuffer, " "); p != NULL; p = strtok(NULL, " ")) {
-        //printf("DEBUG: p inside the loop is = %s\n", p);
         char value_let = p[0];
-        char suit_let = p[1];
+        char * suit_let = &p[1];
         if (value_let == '?'){
-            int unk_index = suit_let - '0'; //converte o valor de suit_let para int
+            int unk_index = atoi(suit_let); //converte o valor de suit_let para int
             card_t * future_card = add_empty_card(hand);
             add_future_card(fc, unk_index, future_card);
             future_card = NULL;
         }
         else {
-        card_t c = card_from_letters(value_let, suit_let);
+        card_t c = card_from_letters(value_let, p[1]);
         add_card_to(hand, c);
         }
     }
