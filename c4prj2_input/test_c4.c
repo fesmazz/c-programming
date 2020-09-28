@@ -186,8 +186,16 @@ void test2(void) {
         add_future_card(fc, i, h->cards[i]);
         //index++;
     }
+    fprintf(stdout, "\nVerificando fc->decks\n");
+     for(size_t i = 0; i < 20; i++) {
+        print_info(&fc->decks[i], i);
+     }
     fprintf(stdout, "Defindo cartas desconhecidas... \n");
     future_cards_from_deck(deck, fc);
+    fprintf(stdout, "\nVerificando fc->decks\n");
+     for(size_t i = 0; i < 20; i++) {
+        print_info(&fc->decks[i], i);
+     }
     fprintf(stdout, "Verificando as mãos: \n\n");
 
     for(int i = 0; i < 4; i++){
@@ -247,16 +255,19 @@ void test3 (char * filename) {
     deck_t * deck = build_remaining_deck(decks, n_hands);
     shuffle(deck);
     print_hand(deck); printf("\n");
-    fprintf(stdout, "\nVerificando fc->decks\n");
-    for(size_t i = 0; i < n_hands; i++) {
-        print_info(fc->decks, i);
+    fprintf(stdout, "Verificando fc->decks\n");
+    fprintf(stdout, "fc->n_decks = %ld\n", fc->n_decks);
+    for(size_t i = 0; i < fc->n_decks; i++) {
+        print_info(&fc->decks[i], i);
     }
     fprintf(stdout, "Definindo cartas desconhecidas\n\n");
     future_cards_from_deck(deck, fc);
     fprintf(stdout, "\nVerificando fc->decks\n");
-     for(size_t i = 0; i < n_hands; i++) {
-        print_info(fc->decks, i);
+    fprintf(stdout, "\nfc->n_decks = %ld\n", fc->n_decks);
+     for(size_t i = 0; i < fc->n_decks; i++) {
+        print_info(&fc->decks[i], i);
     }
+      fprintf(stdout, "\nVerificando mãos\n");
     for(size_t i = 0; i < n_hands; i++) {
         print_info(decks[i], i);
     }
@@ -269,9 +280,11 @@ void test3 (char * filename) {
     }
     free (fc->decks);
     free (fc);
+
     for(size_t i = 0; i < n_hands; i++) {
         free_deck(decks[i]);
     }
+    free(decks);
     free_deck(deck);
 
     return;

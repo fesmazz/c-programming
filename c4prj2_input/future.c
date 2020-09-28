@@ -11,7 +11,7 @@ void add_future_card(future_cards_t *fc, size_t index, card_t * ptr){
             fc->decks[i].n_cards = 0;    
         }
     }
-     if (sizeof(fc->decks)/sizeof(deck_t *) <= index) { // se o número de elementos no array for menor que o índice, redimensione o array para o tamanho do índice
+    if (fc->n_decks <= index) { // se o número de elementos no array for menor que o índice, redimensione o array para o tamanho do índice
         fc->decks = realloc(fc->decks, (index+1) * sizeof(*(fc->decks)));
         for (size_t i = fc->n_decks; i <= index; i++){  //inicializando structs deck_t criadas no realloc acima
             fc->decks[i].cards = malloc(sizeof(*(fc->decks[i].cards)));

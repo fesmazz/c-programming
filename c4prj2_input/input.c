@@ -10,16 +10,15 @@ deck_t * hand_from_string(const char * str, future_cards_t * fc) {
     char * tokbuffer = strdup(str);
     char * tokbuffer_ptr = tokbuffer;
     *(strchr(tokbuffer, '\n')) = '\0'; //excluindo newline do buffer
-    printf("DEBUG: tokbuffer = %s\n", tokbuffer);
     for (char * p = strtok(tokbuffer, " "); p != NULL; p = strtok(NULL, " ")) {
         //printf("DEBUG: p inside the loop is = %s\n", p);
         char value_let = p[0];
         char suit_let = p[1];
         if (value_let == '?'){
             int unk_index = suit_let - '0'; //converte o valor de suit_let para int
-            printf("DEBUG: For card %c%c, index inside the loop is = %d\n", p[0], p[1], unk_index);
             card_t * future_card = add_empty_card(hand);
             add_future_card(fc, unk_index, future_card);
+            future_card = NULL;
         }
         else {
         card_t c = card_from_letters(value_let, suit_let);
