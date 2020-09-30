@@ -29,7 +29,7 @@ deck_t * hand_from_string(const char * str, future_cards_t * fc) {
 }
 
 deck_t ** read_input(FILE * f, size_t * n_hands, future_cards_t * fc) {
-    deck_t ** ans = malloc(sizeof(**ans));
+    deck_t ** ans;
     ans = NULL;
     char * curr_line = NULL;
     size_t sz = 0;
@@ -46,5 +46,5 @@ deck_t ** read_input(FILE * f, size_t * n_hands, future_cards_t * fc) {
     }
     free(curr_line);
     *n_hands = count_hands; //retornando o valor de mãos lidas no input por meio deste pointer
-    return ans; 
+    return ans;
 }

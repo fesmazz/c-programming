@@ -93,12 +93,9 @@ int is_ace_low_straight_at (deck_t *hand, size_t index) {
   if (hand->cards[index]->value == 14) {   
     for (size_t i = 0; i < hand->n_cards; i++){ //procure a primeira carta de valor 5 na mão
       if (hand->cards[i]->value == 5) {
-	if (is_n_lenght_straight_at(hand, i, 4) == 1) { //verifique se existe um straight de 4 cartas na nova mão
-	  return -1; // se houver
-	}
-	else {
-	  return 0; // se não houver
-	}
+	      if (is_n_lenght_straight_at(hand, i, 4) == 1) { //verifique se existe um straight de 4 cartas na nova mão
+	        return -1; // se houver
+      	}
       }  
     } // repita para todos os cincos que encontrar na mão
   }
@@ -124,23 +121,23 @@ int is_n_lenght_straight_at(deck_t *hand, size_t index, int n) {
 
 int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
   int straight = is_n_lenght_straight_at(hand, index, 5);
-  if (hand->cards[0]->value == 14 && straight == 0) {
-    return is_ace_low_straight_at(hand, index);
+  if (hand->cards[index]->value == 14 && straight == 0) {
+    straight = is_ace_low_straight_at(hand, index);
   }  
   if (fs == NUM_SUITS) { // proura por qqr straight
     return straight;
   }
   else { // procura por um straight flush 
-    if (straight  == -1) { // se houver um ace low straight   
+    if (straight  == -1 && hand->cards[index]->suit == fs) { // se houver um ace low straight   
       int count = 0;
       for (size_t i = index; i < hand->n_cards; i++) {
-	unsigned curr_value = hand->cards[i]->value;
-	if ((curr_value == 14 || curr_value == 5 || curr_value == 4 || curr_value == 3 || curr_value == 2) && hand->cards[i]->suit == fs) {
-	  count ++;
-	}
+	      unsigned curr_value = hand->cards[i]->value;
+	        if ((curr_value == 14 || curr_value == 5 || curr_value == 4 || curr_value == 3 || curr_value == 2) && hand->cards[i]->suit == fs) {
+	          count ++;
+	        }
       }
       if (count >= 5) {
-	return 1; //existe um ace low straight flush
+	return -1; //existe um ace low straight flush
       }
       else {
 	return 0; //não existe um ace low straight flush	     
