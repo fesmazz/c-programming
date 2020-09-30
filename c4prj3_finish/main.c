@@ -27,13 +27,13 @@ int main(int argc, char ** argv) {
   if (argc == 3) {
     char * check_num;
     size_t temp = strtol(argv[2], &check_num, 0); //converte argv[2] para uma long em base 10
-    if (check_num == NULL) {
+    //if (check_num == NULL) {
       num_trials = temp;
-    }
-    else {
-      fprintf(stderr, "numTrials must be a number. Exiting...\n");
-      exit(EXIT_FAILURE);
-    }
+    //}
+    //else {
+      //fprintf(stderr, "numTrials must be a number. Exiting...\n");
+      //exit(EXIT_FAILURE);
+    //}
   }
 
 /* Esta porção do código é responsável por abrir o arquivo indicado na execução do programa, definir e iniciliazar
