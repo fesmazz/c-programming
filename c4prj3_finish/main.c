@@ -73,13 +73,14 @@ as variáveis responsáveis por armazenar as informações obtidas, e criar as v
     int curr_hand = 0;
     int tie = -1;
     for (int i = 0; i < n_hands; i++) {
-      if (compare_hands(hands[i], hands[curr_hand]) == 1) {
+      int comp = compare_hands(hands[i], hands[curr_hand]);
+      if (comp == 1) {
         curr_hand = i;
         if (compare_hands(hands[curr_hand], hands[best_hand]) == 1) {
           best_hand = i;
         }
       }
-      else if (compare_hands(hands[i], hands[curr_hand]) == 0 ) {
+      else if (comp == 0 ) {
         tie = i;
       }
     }
@@ -108,7 +109,7 @@ as variáveis responsáveis por armazenar as informações obtidas, e criar as v
   if (fclose(input) != 0) { 
     fprintf(stderr, "Error closing file %s\n", argv[1]);
     }
-    
+
   for(size_t i = 0; i < fc.n_decks; i++) {
         free(fc.decks[i].cards);
     }
