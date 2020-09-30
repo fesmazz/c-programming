@@ -8,6 +8,11 @@
 #include "future.h"
 #include "input.h"
 
+void print_card_to_file(card_t c, FILE * filename) {
+  char value = value_letter(c);
+  char suit = suit_letter(c);
+  fprintf(filename, "%c%c ", value, suit);
+}
 
 
 int main(int argc, char ** argv) {
@@ -40,6 +45,14 @@ as variáveis responsáveis por armazenar as informações obtidas, e criar as v
     exit(EXIT_FAILURE);
     }
 
+//debug -->
+  FILE * debug = fopen("debug.txt", "w");
+  if (input == NULL) {
+    fprintf(stderr, "Failed to open file debug\n");
+    exit(EXIT_FAILURE);
+    }
+// <-- debug
+
   future_cards_t fc;
     fc.decks = NULL;
     fc.n_decks = 0;
@@ -47,7 +60,7 @@ as variáveis responsáveis por armazenar as informações obtidas, e criar as v
   size_t n_hands = 0;
 
   deck_t ** hands = read_input(input, &n_hands, &fc);
-  
+
   deck_t * remaining_deck = build_remaining_deck(hands, n_hands);
 
   size_t win_count[n_hands+1]; 
@@ -64,9 +77,18 @@ as variáveis responsáveis por armazenar as informações obtidas, e criar as v
   for (size_t i = 0; i < num_trials; i++) {
     shuffle(remaining_deck);
     future_cards_from_deck(remaining_deck, &fc);
+//debug -->
+    for (size_t i = 0; i < n_hands; i++) {
+      for (size_t j = 0; j < hands[i]->n_cards; j++) {
+        print_card_to_file(*(hands[i]->cards[j]), debug);
+      }
+      fprintf(debug, ";");
+    }
+    fprintf(debug, "\n");
+// <-- debug
     int best_hand = 0;
     int curr_hand = 0;
-    int tie = 0;
+    int tie = -1;
     for (int i = 0; i < n_hands; i++) {
       if (compare_hands(hands[i], hands[curr_hand]) == 1) {
         curr_hand = i;
@@ -74,15 +96,17 @@ as variáveis responsáveis por armazenar as informações obtidas, e criar as v
           best_hand = i;
         }
       }
-    }
-    for (int i = 0; i < n_hands; i++) {
-      if (i == best_hand) {break;}
-      if (compare_hands(hands[i], hands[best_hand]) == 0 ) { // caso de empate
-        tie++;
+      else if (compare_hands(hands[i], hands[curr_hand]) == 0 ) {
+        tie = i;
       }
     }
   if (tie > 0) {
-    win_count[n_hands+1]++;
+    if (compare_hands(hands[best_hand], hands[tie]) == 1) {
+      win_count[best_hand]++;
+    }
+    else {
+      win_count[n_hands+1]++;
+    }
   }
   else {
     win_count[best_hand]++;
@@ -101,7 +125,11 @@ as variáveis responsáveis por armazenar as informações obtidas, e criar as v
   if (fclose(input) != 0) { 
     fprintf(stderr, "Error closing file %s\n", argv[1]);
     }
-
+//debug -->
+  if (fclose(debug) != 0) { 
+    fprintf(stderr, "Error closing file %s\n", argv[1]);
+    }  
+// <-- debug
   for(size_t i = 0; i < fc.n_decks; i++) {
         free(fc.decks[i].cards);
     }
@@ -110,6 +138,9 @@ as variáveis responsáveis por armazenar as informações obtidas, e criar as v
   for(size_t i = 0; i < n_hands; i++) {
         free_deck(hands[i]);
     }
+  free(hands);
+
+  free_deck(remaining_deck);
 
   return EXIT_SUCCESS;
 }
