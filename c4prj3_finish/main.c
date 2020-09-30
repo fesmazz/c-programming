@@ -98,7 +98,7 @@ as variáveis responsáveis por armazenar as informações obtidas, e criar as v
 // Esta porção do código exibe os resultados 
 
   for (size_t i = 0; i < n_hands; i++) {
-    float ratio =  win_count[i] / num_trials * 100;
+    float ratio = (float) win_count[i] /(float) num_trials * 100;
     fprintf(stdout, "Hand %zu won %lu / %lu times (%.2f%%)\n", i, win_count[i], num_trials, ratio);
   }
   fprintf(stdout, "And there were %lu ties\n", win_count[n_hands+1]);
