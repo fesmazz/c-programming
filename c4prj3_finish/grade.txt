@@ -1,4 +1,4 @@
-Grading at Thu Oct  1 04:35:14 UTC 2020
+Grading at Thu Oct  1 05:14:08 UTC 2020
 Running 'make clean' to do a clean build of your project
 rm -rf *.o poker *~
 Running 'make poker OTHERFLAGS=-O3' to build your project
@@ -51,11 +51,11 @@ Running a simulation with 40000 draws for 3 hands...
  - Then one from a completely made up poker variant
 Running a simulation with 100000 draws for 6 hands...
 Valgrind reported errors:
-==1328== Memcheck, a memory error detector
-==1328== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==1328== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
-==1328== Command: ./poker whacky.txt 100000
-==1328== Parent PID: 1327
-==1328== 
+==2000== Memcheck, a memory error detector
+==2000== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==2000== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==2000== Command: ./poker whacky.txt 100000
+==2000== Parent PID: 1999
+==2000== 
 
 Overall Grade: B
