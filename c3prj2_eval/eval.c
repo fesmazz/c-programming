@@ -7,15 +7,17 @@ int card_ptr_comp(const void * vp1, const void * vp2) { // compara duas cartas
   const card_t * const *cp1 = vp1; // converting pointer type from const void pointer to a const card_t pointer whose adress cannot be changed (as vp1's adress is also a const).
   const card_t * const *cp2 = vp2;   
   size_t v_comp = (**cp1).value - (**cp2).value; //subtrai valor da carta 1 pelo valor das carta 2 para ver quem é maior
-  size_t s_comp = (**cp1).suit - (**cp2).suit; // subtrai o naipe da carta 1 do naipe da carta 2 para ver quem é maior 
   if (v_comp != 0) { //se as cartas não tiverem o mesmo valor
     return -1 * v_comp; // queremos ordenar de forma decrescente, mas a função qsort que será usada posteriormente ordena de forma crescente. Por isso, invertemos o sinal do return value 
   }
-  else if (s_comp != 0) { // se as cartas tiverem o mesmo valor, compare os naipes 
+  else {
+    size_t s_comp = (**cp1).suit - (**cp2).suit; // subtrai o naipe da carta 1 do naipe da carta 2 para ver quem é maior 
+    if (s_comp != 0) { // se as cartas tiverem o mesmo valor, compare os naipes 
     return -1 * s_comp;
-  }
-  else { // se as cartas forem iguais 
-    return 0;
+    }
+    else { // se as cartas forem iguais 
+      return 0;
+    }
   }
 }
 
@@ -50,7 +52,7 @@ suit_t flush_suit(deck_t * hand) { // verifica se há pelo menos cinco cartas do
 unsigned get_largest_element(unsigned * arr, size_t n) { // pega maior elemento em um array
   unsigned current_match = arr[0];
   unsigned best_match = arr[0];
-  for (size_t i = 0; i < n; i++){
+  for (size_t i = 1; i < n; i++){
     const unsigned *p1 = &arr[i];
     if (*p1 > current_match){
       current_match = *p1;
@@ -222,12 +224,12 @@ int compare_hands(deck_t * hand1, deck_t * hand2) {
   else {
     for (int i = 0; i < 5; i++) {
       if (eval_1.cards[i]->value != eval_2.cards[i]->value) {
-	if (eval_1.cards[i]->value > eval_2.cards[i]->value) {
-	  return 1;
-	}
-	else {
-	  return -1;
-	}
+	      if (eval_1.cards[i]->value > eval_2.cards[i]->value) {
+	        return 1;
+	      }
+	      else {
+	        return -1;
+	      }
       }
     }
     return 0;
@@ -240,7 +242,7 @@ unsigned * get_match_counts(deck_t * hand) {
     unsigned count = 0;
     for (size_t j = 0; j < hand->n_cards; j++) {
       if (hand->cards[i]->value == hand->cards[j]->value){
-	count++;
+	      count++;
       }
     }
     match_counts[i] = count;
