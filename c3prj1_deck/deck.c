@@ -25,7 +25,7 @@ int deck_contains(deck_t * d, card_t c) {
 }
 
 void shuffle(deck_t * d){
-  for (size_t i = 0; i < 15; i++) { // troca duas cartas de posição 15 vezes
+  for (size_t i = 0; i < 5; i++) { // troca duas cartas de posição 15 vezes
     card_t * p1; // pointer para armazenar valor que será substituído
     size_t t1 = random() % d->n_cards;
     size_t t2 = random() % d->n_cards; //gera dois números aleatórios entre 0 e d.n_cards-1 
