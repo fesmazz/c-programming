@@ -187,22 +187,20 @@ hand_eval_t build_hand_from_match(deck_t * hand, unsigned n, hand_ranking_t what
       return ans;
     }
     else { 
-      unsigned tmp_n = hand->n_cards - n;
-      card_t * tmp_hand[tmp_n]; // cria uma nova mão removendo as cartas que compõem n of a kind (o par, o trio ou a quadra)
+      unsigned remaining = 5 - n;
       unsigned tmp_idx = 0;
-      for (unsigned i = 0; i < hand->n_cards; i++) {     
-        if ((i < idx || i >= (idx+n)) && tmp_idx < tmp_n) {
-	        tmp_hand[tmp_idx] = hand->cards[i];
-	        tmp_idx++;
-	      }
-      }
-      tmp_idx = 0;
-      for (unsigned i = n; i < 5; i++) { //copia as melhores cartas restantes para a mão de ans
-        ans.cards[i] = tmp_hand[tmp_idx];
-        tmp_idx++;
-      }
-    }
-  } 
+        for (unsigned i = 0; i < hand->n_cards; i++) {
+          if (remaining == 0) {
+            break;
+          }    
+          else if (i < idx || i >= (idx+n)) {
+	          ans.cards[n+tmp_idx] = hand->cards[i];
+	          tmp_idx++;
+            remaining--;
+	        }
+        }
+     }
+  }
   return ans;
 }
 
