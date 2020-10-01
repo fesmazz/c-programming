@@ -72,7 +72,7 @@ as variáveis responsáveis por armazenar as informações obtidas, e criar as v
     int best_hand = 0;
     int curr_hand = 0;
     int tie = -1;
-    for (int i = 0; i < n_hands; i++) {
+    for (int i = 1; i < n_hands; i++) {
       int comp = compare_hands(hands[i], hands[curr_hand]);
       if (comp == 1) {
         curr_hand = i;
