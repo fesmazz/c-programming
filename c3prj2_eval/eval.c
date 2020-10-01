@@ -171,39 +171,38 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
     }
   }
 }
-hand_eval_t build_hand_from_match(deck_t * hand,
-				  unsigned n,
-				  hand_ranking_t what,
-				  size_t idx) {
-
+hand_eval_t build_hand_from_match(deck_t * hand, unsigned n, hand_ranking_t what, size_t idx) {
   hand_eval_t ans; //variável que contém melhor mão de 5 cartas do tipo N of a Kind e descrição do ranking
   ans.ranking = what;
-  for (unsigned i = 0; i < n; i++){
-    ans.cards[i] = hand->cards[idx+i];
-  }
   if (ans.ranking == NOTHING) {
     for (unsigned i = 0; i < 5; i++) {
       ans.cards[i] = hand->cards[i];
     }
   }
-  else {
-    
-    unsigned tmp_n = hand->n_cards - n;
-    card_t * tmp_hand[tmp_n]; // cria uma nova mão removendo as cartas que compõem n of a kind (o par, o trio ou a quadra)
-    unsigned tmp_idx = 0;
-    for (unsigned i = 0; i < hand->n_cards; i++) {     
-      if ((i < idx || i >= (idx+n)) && tmp_idx < tmp_n) {
-	  tmp_hand[tmp_idx] = hand->cards[i];
-	  tmp_idx++;
-	}
+  else { 
+    for (unsigned i = 0; i < n; i++){
+      ans.cards[i] = hand->cards[idx+i];
       }
-    tmp_idx = 0;
-    for (unsigned i = n; i < 5; i++) { //copia as melhores cartas restantes para a mão de ans
-      ans.cards[i] = tmp_hand[tmp_idx];
-      tmp_idx++;
+    if (n == 5) {
+      return ans;
     }
-  }
-  
+    else { 
+      unsigned tmp_n = hand->n_cards - n;
+      card_t * tmp_hand[tmp_n]; // cria uma nova mão removendo as cartas que compõem n of a kind (o par, o trio ou a quadra)
+      unsigned tmp_idx = 0;
+      for (unsigned i = 0; i < hand->n_cards; i++) {     
+        if ((i < idx || i >= (idx+n)) && tmp_idx < tmp_n) {
+	        tmp_hand[tmp_idx] = hand->cards[i];
+	        tmp_idx++;
+	      }
+      }
+      tmp_idx = 0;
+      for (unsigned i = n; i < 5; i++) { //copia as melhores cartas restantes para a mão de ans
+        ans.cards[i] = tmp_hand[tmp_idx];
+        tmp_idx++;
+      }
+    }
+  } 
   return ans;
 }
 
